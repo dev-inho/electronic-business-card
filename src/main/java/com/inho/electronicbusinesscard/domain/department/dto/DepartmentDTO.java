@@ -1,12 +1,11 @@
 package com.inho.electronicbusinesscard.domain.department.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Builder
 @ToString
 @NoArgsConstructor

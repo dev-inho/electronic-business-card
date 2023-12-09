@@ -1,6 +1,7 @@
 package com.inho.electronicbusinesscard.domain.department.vo;
 
 import com.inho.electronicbusinesscard.domain.common.BaseVO;
+import com.inho.electronicbusinesscard.domain.department.dto.DepartmentDTO;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -26,6 +27,21 @@ public class DepartmentVO extends BaseVO {
 
         this.code = code;
         this.name = name;
+    }
+
+    /**
+     * DepartmentVO -> DepartmentDTO
+     * @return DepartmentDTO
+     */
+    public DepartmentDTO toDTO() {
+        return DepartmentDTO.builder()
+                .code(code)
+                .name(name)
+                .createdDt(super.getCreatedDt())
+                .createdId(super.getCreatedId())
+                .updatedDt(super.getUpdatedDt())
+                .updatedId(super.getUpdatedId())
+                .build();
     }
 
 }

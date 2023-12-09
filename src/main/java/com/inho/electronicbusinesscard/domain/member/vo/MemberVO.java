@@ -1,6 +1,5 @@
-package com.inho.electronicbusinesscard.domain.user.vo;
+package com.inho.electronicbusinesscard.domain.member.vo;
 
-import com.inho.electronicbusinesscard.domain.common.Authority;
 import com.inho.electronicbusinesscard.domain.common.BaseVO;
 import com.inho.electronicbusinesscard.domain.department.vo.DepartmentVO;
 import lombok.Getter;
@@ -12,22 +11,17 @@ import java.time.LocalDateTime;
  * 사용자 정보 VO
  */
 @Getter
-public class UserVO extends BaseVO {
+public class MemberVO extends BaseVO {
 
     /**
      * 사용자 번호
      */
-    private final long userIdx;
+    private final long memberIdx;
 
     /**
      * 이름
      */
-    private final String userName;
-
-    /**
-     * 권한
-     */
-    private final Authority authority;
+    private final String memberName;
 
     /**
      * 소속 회사
@@ -45,12 +39,11 @@ public class UserVO extends BaseVO {
     private final DepartmentVO department;
 
 
-    public UserVO(String createdId, LocalDateTime createdDt, String updatedId, LocalDateTime updatedDt, long userIdx,
-                  String userName, Authority authority, String company, LocalDate certificationDt, DepartmentVO department) {
+    public MemberVO(String createdId, LocalDateTime createdDt, String updatedId, LocalDateTime updatedDt, long memberIdx,
+                    String memberName, String company, LocalDate certificationDt, DepartmentVO department) {
         super(createdId, createdDt, updatedId, updatedDt);
-        this.userIdx = userIdx;
-        this.userName = userName;
-        this.authority = authority;
+        this.memberIdx = memberIdx;
+        this.memberName = memberName;
         this.company = company;
         this.certificationDt = certificationDt;
         this.department = department;

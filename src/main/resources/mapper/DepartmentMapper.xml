@@ -79,4 +79,12 @@
          WHERE code = #{code}
     </update>
 
+    <!--
+        [DepartmentMapper.delete] 소속 지회 삭제(물리)
+    -->
+    <delete id="delete" parameterType="Map">
+        DELETE FROM DEPARTMENTS
+         WHERE code = #{code}
+    </delete>
+
 </mapper>

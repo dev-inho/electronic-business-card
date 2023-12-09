@@ -1,7 +1,10 @@
 package com.inho.electronicbusinesscard.repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inho.electronicbusinesscard.domain.department.dto.DepartmentDTO;
 import com.inho.electronicbusinesscard.domain.department.exception.NotFoundDepartmentException;
 import com.inho.electronicbusinesscard.domain.department.vo.DepartmentVO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +26,18 @@ class DepartmentMapperTest {
 
     @Autowired
     DepartmentMapper departmentMapper;
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    /**
+     * 데이터베이스 초기화
+     */
+    @BeforeEach
+    void setUp() {
+        departmentMapper.findAll().forEach(departmentDTO -> {
+            departmentMapper.delete(objectMapper.convertValue(departmentDTO, Map.class));
+        });
+    }
 
     @Test
     @Transactional

@@ -1,22 +1,16 @@
-package com.inho.electronicbusinesscard.domain.user.dto;
+package com.inho.electronicbusinesscard.domain.member.dto;
 
-import com.inho.electronicbusinesscard.domain.common.Authority;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserSearchDTO {
+public class MemberSearchDTO {
 
     /**
      * 사용자 이름
      */
     @Size(max = 10, message = "이름은 10글자를 넘길 수 없습니다.")
     private String userName;
-
-    /**
-     * 권한
-     */
-    private Authority authority;
 
     /**
      * 사명

@@ -1,6 +1,7 @@
-package com.inho.electronicbusinesscard.handler;
+package com.inho.electronicbusinesscard.config.handler;
 
 import com.inho.electronicbusinesscard.domain.common.CommonResponseDTO;
+import com.inho.electronicbusinesscard.domain.department.exception.InvalidDepartmentDataException;
 import com.inho.electronicbusinesscard.domain.department.exception.NotFoundDepartmentException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,8 @@ public class CustomExceptionHandler {
      * @return {res: false, msg: String, code: 4XX, data: null}
      */
     @ExceptionHandler({
-        NotFoundDepartmentException.class
+        NotFoundDepartmentException.class,
+        InvalidDepartmentDataException.class
     })
     public ResponseEntity<CommonResponseDTO> clientExceptionHandler(RuntimeException e) {
 

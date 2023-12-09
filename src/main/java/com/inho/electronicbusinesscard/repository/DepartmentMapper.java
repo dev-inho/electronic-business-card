@@ -40,4 +40,11 @@ public interface DepartmentMapper {
      */
     Optional<DepartmentVO> findById(Map<String, Object> inputs);
 
+    /**
+     * 소속 지회 삭제
+     * @param inputs {code: String}
+     * @return 영향을 준 쿼리
+     */
+    int delete(Map<String, Object> inputs);
+
 }

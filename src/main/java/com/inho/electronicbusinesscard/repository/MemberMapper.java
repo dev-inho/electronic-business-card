@@ -1,19 +1,19 @@
 package com.inho.electronicbusinesscard.repository;
 
-import com.inho.electronicbusinesscard.domain.user.vo.UserVO;
+import com.inho.electronicbusinesscard.domain.member.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface UserMapper {
+public interface MemberMapper {
 
     /**
      * 사용자 정보 조회
      * @return 조회된 사용자 수
      */
-    List<UserVO> findAll(Map<String, Object> inputs);
+    List<MemberVO> findAll(Map<String, Object> inputs);
 
     /**
      * 사용자 정보 생성

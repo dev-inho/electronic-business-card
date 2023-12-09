@@ -4,15 +4,14 @@
 <!--
     사용자 테이블
  -->
-<mapper namespace="com.inho.electronicbusinesscard.repository.UserMapper">
+<mapper namespace="com.inho.electronicbusinesscard.repository.MemberMapper">
 
-    <select id="findAll" resultType="com.inho.electronicbusinesscard.domain.user.vo.UserVO" parameterType="Map">
+    <select id="findAll" resultType="com.inho.electronicbusinesscard.domain.member.vo.MemberVO" parameterType="Map">
         /*
             [UserMapper.findAll] 사용자 전체 조회
         */
-        SELECT user_idx
-             , user_name
-             , authority
+        SELECT member_idx
+             , member_name
              , company
              , certification_dt
              , phone_number
@@ -22,13 +21,10 @@
              , created_dt
              , updated_id
              , updated_dt
-        FROM ${test-table-prefix}USER
+        FROM MEMBERS
         WHERE 1 = 1
-        <if test="userName != null and userName.trim().length() > 1">
-            AND user_name LIKE CONCAT('%', #{userName}, '%')
-        </if>
-        <if test="authority != null and authority.trim().length() > 1">
-            AND authority LIKE CONCAT('%', #{authority}, '%')
+        <if test="memberName != null and memberName.trim().length() > 1">
+            AND member_name LIKE CONCAT('%', #{memberName}, '%')
         </if>
         <if test="company != null and company.trim().length() > 1">
             AND company LIKE CONCAT('%', #{company}, '%')
@@ -43,9 +39,8 @@
         /*
             [UserMapper.add] 사용자 추가
         */
-        INSERT INTO ${test-table-prefix}User (
-               user_name
-             , authority
+        INSERT INTO MEMBERS (
+               member_name
              , company
              , certification_dt
              , phone_number
@@ -54,8 +49,7 @@
              , created_id
              , created_dt
              ) VALUES (
-               #{userName}
-             , #{authority.name}
+               #{memberName}
              , #{company}
              , #{certificationDt}
              , #{phoneNumber}
@@ -70,10 +64,10 @@
         /*
             [UserMapper.modify] 사용자 정보 수정
         */
-        UPDATE ${test-table-prefix}USER
+        UPDATE MEMBERS
          <set>
-             <if test="userName != nul and userName.trim().length() > 1">
-                 user_name = #{userName},
+             <if test="memberName != nul and memberName.trim().length() > 1">
+                 member_name = #{memberName},
              </if>
              <if test="phoneNumber != null and phoneNumber.trim().length() >1">
                  phone_number = #{phoneNumber},
@@ -82,6 +76,7 @@
                  email = #{email},
              </if>
          </set>
-        WHERE user_idx = #{userIdx}
+        WHERE member_idx = #{memberIdx}
     </update>
+
 </mapper>
