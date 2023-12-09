@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    소속 지회 테이블
+ -->
+<mapper namespace="com.inho.electronicbusinesscard.repository.DepartmentMapper">
+
+
+    <!--
+        [DepartmentMapper.departmentResultMap] DepartmentVO의 ResultMap
+    -->
+    <resultMap id="departmentResultMap" type="com.inho.electronicbusinesscard.domain.department.vo.DepartmentVO">
+        <constructor>
+            <arg column="created_id" javaType="String"/>
+            <arg column="created_dt" javaType="java.time.LocalDateTime"/>
+            <arg column="updated_id" javaType="String"/>
+            <arg column="updated_dt" javaType="java.time.LocalDateTime"/>
+            <idArg column="code" javaType="String"/>
+            <arg column="name" javaType="String"/>
+        </constructor>
+    </resultMap>
+
+    <!--
+        [DepartmentMapper.findAll] 소속 지회 전체 조회
+    -->
+    <select id="findAll" resultMap="departmentResultMap">
+        SELECT code
+             , name
+             , created_dt
+             , created_id
+             , updated_dt
+             , updated_id
+          FROM DEPARTMENTS
+    </select>
+
+    <!--
+        [DepartmentMapper.findAll] 소속 지회 단건 조회
+    -->
+    <select id="findById" parameterType="Map" resultMap="departmentResultMap">
+        SELECT code
+             , name
+             , created_dt
+             , created_id
+             , updated_dt
+             , updated_id
+        FROM DEPARTMENTS
+        WHERE 1 = 1
+        <if test="code != null and code.trim().length > 1">
+            AND code = #{code}
+        </if>
+    </select>
+
+    <!--
+        [DepartmentMapper.add] 소속 지회 추가
+    -->
+    <insert id="add" parameterType="Map">
+        INSERT INTO DEPARTMENTS (
+               code
+             , name
+             , created_id
+             , created_dt
+             ) VALUES (
+               #{code}
+             , #{name}
+             , #{createdId}
+             , CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <!--
+        [DepartmentMapper.modify] 소속 지회 수정
+    -->
+    <update id="modify" parameterType="Map">
+        UPDATE DEPARTMENTS
+           SET name = #{name}
+             , updated_dt = CURRENT_TIMESTAMP
+             , updated_id = #{updatedId}
+         WHERE code = #{code}
+    </update>
+
+</mapper>

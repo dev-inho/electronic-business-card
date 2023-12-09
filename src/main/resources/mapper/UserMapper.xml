@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    사용자 테이블
+ -->
+<mapper namespace="com.inho.electronicbusinesscard.repository.UserMapper">
+
+    <select id="findAll" resultType="com.inho.electronicbusinesscard.domain.user.vo.UserVO" parameterType="Map">
+        /*
+            [UserMapper.findAll] 사용자 전체 조회
+        */
+        SELECT user_idx
+             , user_name
+             , authority
+             , company
+             , certification_dt
+             , phone_number
+             , email
+             , department
+             , created_id
+             , created_dt
+             , updated_id
+             , updated_dt
+        FROM ${test-table-prefix}USER
+        WHERE 1 = 1
+        <if test="userName != null and userName.trim().length() > 1">
+            AND user_name LIKE CONCAT('%', #{userName}, '%')
+        </if>
+        <if test="authority != null and authority.trim().length() > 1">
+            AND authority LIKE CONCAT('%', #{authority}, '%')
+        </if>
+        <if test="company != null and company.trim().length() > 1">
+            AND company LIKE CONCAT('%', #{company}, '%')
+        </if>
+        <if test="department != null and department.trim().length() > 1">
+            AND department LIKE CONCAT('%', #{department}, '%')
+        </if>
+        ORDER BY user_name
+    </select>
+
+    <insert id="add" parameterType="Map">
+        /*
+            [UserMapper.add] 사용자 추가
+        */
+        INSERT INTO ${test-table-prefix}User (
+               user_name
+             , authority
+             , company
+             , certification_dt
+             , phone_number
+             , email
+             , department
+             , created_id
+             , created_dt
+             ) VALUES (
+               #{userName}
+             , #{authority.name}
+             , #{company}
+             , #{certificationDt}
+             , #{phoneNumber}
+             , #{email}
+             , #{department}
+             , #{createdId}
+             , CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <update id="modify" parameterType="Map">
+        /*
+            [UserMapper.modify] 사용자 정보 수정
+        */
+        UPDATE ${test-table-prefix}USER
+         <set>
+             <if test="userName != nul and userName.trim().length() > 1">
+                 user_name = #{userName},
+             </if>
+             <if test="phoneNumber != null and phoneNumber.trim().length() >1">
+                 phone_number = #{phoneNumber},
+             </if>
+             <if test="email != null and email.trim().length() > 1">
+                 email = #{email},
+             </if>
+         </set>
+        WHERE user_idx = #{userIdx}
+    </update>
+</mapper>
