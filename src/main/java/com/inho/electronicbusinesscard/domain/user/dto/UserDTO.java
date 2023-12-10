@@ -44,4 +44,10 @@ public class UserDTO {
      * 권한
      */
     private Set<AuthorityDTO> authorities;
+
+    /**
+     * 활동 여부
+     */
+    private boolean isActivated;
+
 }

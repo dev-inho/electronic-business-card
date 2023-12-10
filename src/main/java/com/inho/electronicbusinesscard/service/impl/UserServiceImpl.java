@@ -6,6 +6,7 @@ import com.inho.electronicbusinesscard.domain.user.dto.SignUpRequestDTO;
 import com.inho.electronicbusinesscard.domain.user.dto.UserDTO;
 import com.inho.electronicbusinesscard.domain.user.exception.DuplicateUserException;
 import com.inho.electronicbusinesscard.domain.user.vo.UserVO;
+import com.inho.electronicbusinesscard.repository.AuthorityMapper;
 import com.inho.electronicbusinesscard.repository.UserMapper;
 import com.inho.electronicbusinesscard.service.UserService;
 import com.inho.electronicbusinesscard.util.SecurityUtil;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserMapper userMapper;
+
+    private final AuthorityMapper authorityMapper;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -58,10 +62,19 @@ public class UserServiceImpl implements UserService {
         // 저장
         userMapper.add(objectMapper.convertValue(userVO, Map.class));
 
-        // 최종 설정한 User 정보를 DB에 저장
-        return userMapper.findByUserId(userVO.getUserId())
+        UserDTO userDTO = userMapper.findByUserId(userVO.getUserId())
                 .map(UserVO::toDTO)
                 .orElseThrow(() -> new UserPrincipalNotFoundException("사용자를 찾을 수 없습니다."));
+
+        // 권한 저장
+        Map<String, Object> authorityInfo = new HashMap<>();
+        authorityInfo.put("userIdx", userDTO.getUserIdx());
+        authorityInfo.put("authorityName", authority.getAuthorityName());
+
+        authorityMapper.add(authorityInfo);
+
+        // 최종 설정한 User 정보를 DB에 저장
+        return userDTO;
     }
 
     // 유저, 권한정보를 가져오는 메서드 1    // username을 기준으로 정보를 가져옴

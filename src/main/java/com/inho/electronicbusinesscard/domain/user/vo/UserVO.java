@@ -85,6 +85,7 @@ public class UserVO extends BaseVO {
                 .userName(userName)
                 .phoneNumber(phoneNumber)
                 .authorities(authorities.stream().map(AuthorityVO::toDTO).collect(Collectors.toSet()))
+                .isActivated(isActivated)
                 .build();
     }
 }

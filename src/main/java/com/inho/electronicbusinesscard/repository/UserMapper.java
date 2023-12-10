@@ -26,9 +26,8 @@ public interface UserMapper {
     /**
      * 사용자 등록
      * @param inputs
-     * @return 영향을 준 쿼리
      */
-    int add(Map<String, Object> inputs);
+    void add(Map<String, Object> inputs);
 
     /**
      * 사용자 수정

@@ -5,10 +5,38 @@
 <!--
     권한 테이블
 -->
-<mapper namespace="com.inho.electronicbusinesscard.mapper.AuthorityMapper">
-    <select id="selectAuthorities" resultType="com.inho.electronicbusinesscard.domain.authority.vo.AuthorityVO">
-        SELECT authority_name
+<mapper namespace="com.inho.electronicbusinesscard.repository.AuthorityMapper">
+
+    <resultMap id="userResultMap" type="com.inho.electronicbusinesscard.domain.authority.vo.AuthorityVO">
+        <constructor>
+            <idArg column="authority_idx" javaType="java.lang.Long"/>
+            <arg column="user_idx" javaType="java.lang.Long"/>
+            <arg column="authority_name" javaType="String"/>
+        </constructor>
+    </resultMap>
+
+    <!--
+       [AuthorityMapper.findByUserId] 권한 조회
+    -->
+    <select id="findByUserId" resultType="com.inho.electronicbusinesscard.domain.authority.vo.AuthorityVO">
+        SELECT authority_idx
+             , user_idx
+             , authority_name
           FROM AUTHORITIES
          WHERE user_idx = #{userIdx}
     </select>
+
+    <!--
+        [AuthorityMapper.add] 권한 생성
+    -->
+    <insert id="add" parameterType="Map">
+        INSERT AUTHORITIES (
+               user_idx
+             , authority_name
+      ) VALUES (
+              #{userIdx}
+            , #{authorityName}
+       )
+    </insert>
+
 </mapper>

@@ -19,9 +19,12 @@
             <arg column="is_activated" javaType="java.lang.Boolean"/>
         </constructor>
         <collection property="authorities" ofType="com.inho.electronicbusinesscard.domain.authority.vo.AuthorityVO"
-                    column="user_idx" select="com.inho.electronicbusinesscard.mapper.AuthorityMapper.selectAuthorities"/>
+                    column="user_idx" select="com.inho.electronicbusinesscard.repository.AuthorityMapper.findByUserId"/>
     </resultMap>
 
+    <!--
+        [UserMapper.findByUserId] 사용자 단건 조회
+    -->
     <select id="findByUserId" resultMap="userResultMap">
         SELECT user_idx
              , user_id
@@ -44,8 +47,39 @@
              , user_name
              , phone_number
              , is_activated
-        FROM USERS
-        WHERE user_idx = #{userIdx}
+          FROM USERS
+         WHERE user_idx = #{userIdx}
     </select>
+
+    <!--
+        [UserMapper.add] 사용자 생성
+    -->
+    <insert id="add" parameterType="Map">
+        INSERT INTO USERS (
+               user_id
+             , password
+             , user_name
+             , phone_number
+             , is_activated
+             , created_id
+             , created_dt
+        )
+        VALUES (
+               #{userId}
+             , #{password}
+             , #{userName}
+             , #{phoneNumber}
+             , #{activated}
+             , #{userId}
+             , CURRENT_TIMESTAMP
+             )
+    </insert>
+
+    <!--
+        [UserMapper.modify] 사용자 수정
+    -->
+    <update id="modify" parameterType="Map">
+
+    </update>
 
 </mapper>
