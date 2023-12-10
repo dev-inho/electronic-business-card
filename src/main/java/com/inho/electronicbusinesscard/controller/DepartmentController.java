@@ -85,7 +85,7 @@ public class DepartmentController {
                 .ok()
                 .body(CommonResponseDTO.builder()
                         .code(HttpStatus.OK.value())
-                        .msg(byId.getName() + " 의 정보입니다.")
+                        .msg(byId.getName() + "의 정보입니다.")
                         .res(true)
                         .data(departments)
                         .build());

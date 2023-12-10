@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    사용자 테이블
+ -->
+<mapper namespace="com.inho.electronicbusinesscard.repository.UserMapper">
+    <resultMap id="userResultMap" type="com.inho.electronicbusinesscard.domain.user.vo.UserVO">
+        <constructor>
+            <arg column="created_id" javaType="String"/>
+            <arg column="created_dt" javaType="java.time.LocalDateTime"/>
+            <arg column="updated_id" javaType="String"/>
+            <arg column="updated_dt" javaType="java.time.LocalDateTime"/>
+            <idArg column="user_idx" javaType="java.lang.Long"/>
+            <arg column="user_id" javaType="java.lang.String"/>
+            <arg column="password" javaType="java.lang.String"/>
+            <arg column="user_name" javaType="java.lang.String"/>
+            <arg column="phone_number" javaType="java.lang.String"/>
+            <arg column="is_activated" javaType="java.lang.Boolean"/>
+        </constructor>
+        <collection property="authorities" ofType="com.inho.electronicbusinesscard.domain.authority.vo.AuthorityVO"
+                    column="user_idx" select="com.inho.electronicbusinesscard.mapper.AuthorityMapper.selectAuthorities"/>
+    </resultMap>
+
+    <select id="findByUserId" resultMap="userResultMap">
+        SELECT user_idx
+             , user_id
+             , password
+             , user_name
+             , phone_number
+             , is_activated
+             , created_id
+             , created_dt
+             , updated_id
+             , updated_dt
+          FROM USERS
+         WHERE user_id = #{userId}
+    </select>
+
+    <select id="findById" resultMap="userResultMap">
+        SELECT user_idx
+             , user_id
+             , password
+             , user_name
+             , phone_number
+             , is_activated
+        FROM USERS
+        WHERE user_idx = #{userIdx}
+    </select>
+
+</mapper>

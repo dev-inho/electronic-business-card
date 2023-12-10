@@ -11,8 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import org.springframework.restdocs.request.ParameterDescriptor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +23,8 @@ import java.util.Map;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,6 +56,7 @@ class DepartmentControllerTest {
 
     @Test
     @DisplayName("소속 지회 생성")
+    @WithMockUser(username="admin", roles={"ADMIN"})
     void add() throws Exception {
         Map<String, Object> inputs = new HashMap<>();
 
@@ -125,16 +129,14 @@ class DepartmentControllerTest {
         /* 소속 지회 저장 */
         departmentMapper.add(inputs);
 
-        inputs = new HashMap<>();
-        inputs.put("code", "TEST_001");
-
         /* 소속 지회 조회 */
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/department"))
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/department")
+                        .param("code", "TEST_001"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("department-find-by-id-test",
-                        pathParameters(
-                                parameterWithName("code").description("소속 지회 코드")
+                        queryParameters(
+                                parameterWithName("code").description("The code of the department")
                         )
                 ))
                 .andExpect(jsonPath("$.code").value(is(200)))

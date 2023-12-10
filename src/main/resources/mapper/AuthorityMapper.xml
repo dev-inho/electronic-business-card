@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    권한 테이블
+-->
+<mapper namespace="com.inho.electronicbusinesscard.mapper.AuthorityMapper">
+    <select id="selectAuthorities" resultType="com.inho.electronicbusinesscard.domain.authority.vo.AuthorityVO">
+        SELECT authority_name
+          FROM AUTHORITIES
+         WHERE user_idx = #{userIdx}
+    </select>
+</mapper>

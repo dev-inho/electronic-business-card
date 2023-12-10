@@ -16,5 +16,7 @@ mybatis:
 # MyBatis 설정
   mapper-locations: classpath:mapper/*.xml
 jwt:
+  secret: ZWxlY3Ryb25pYy1idXNpbmVzcy1jYXJkLXNlY3JldC1rZXk=
   header: Authorization
   token-validity-in-seconds: 86400
+  temp: electronic-business-card-secret-key
